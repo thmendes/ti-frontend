@@ -35,7 +35,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn rounded class="white--text" color="#16796F">Comprar</v-btn>
-                <v-btn rounded class="white--text" color="#16796F">Vender</v-btn>
+                <v-btn rounded class="white--text" color="#16796F" v-if="checkStockInAssets(stock.id)">Vender</v-btn>
               </v-card-actions>
             </v-card>
           </div>
@@ -50,22 +50,30 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
-      stocks: []
+      stocks: [],
+      assets: []
     }
   },
   methods: {
     ...mapActions({
-      getStocks: 'stocks/getStocks'
-    })
+      getStocks: 'stocks/getStocks',
+      getAssets: 'assets/getAssets'
+    }),
+    checkStockInAssets(id){
+      const asset = this.assets.find(asset => asset.stock == id);
+      return asset != undefined;
+    }
   },
-  created() {
-    this.getStocks()
-    .then((data) => {
-      this.stocks = data.Items;
-    })
-    .catch((error) => {
+  async created() {
+    try{
+      var assets = await this.getAssets();
+      this.assets = assets.Item.assets;
+      var stocks = await this.getStocks();
+      this.stocks = stocks.Items;
+    }
+    catch(error){
       console.log(error);
-    });
+    }    
   },
 }
 </script>

@@ -16,7 +16,7 @@
         class="white--text"
       >
         <v-card-title >Saldo Total</v-card-title>
-        <v-card-text class="white--text" style="font-size:larger">R$ {{ account.balance + totalAssets }}</v-card-text>
+        <v-card-text class="white--text" style="font-size:larger">R$ {{ Math.round((account.balance + totalAssets) * 100) / 100  }}</v-card-text>
       </v-card>
     </v-col>
     <v-col
@@ -33,7 +33,7 @@
         min-height="242px"
       >
         <v-card-title >Saldo em Conta</v-card-title>
-        <v-card-text class="white--text" style="font-size:larger">R$ {{ account.balance }}</v-card-text>
+        <v-card-text class="white--text" style="font-size:larger">R$ {{ Math.round(account.balance * 100) / 100 }}</v-card-text>
         <v-card-text class="white--text">Nome: {{ account.name }}<br>Conta: {{ account.id }}</v-card-text>
         <v-card-actions>
           <deposit :account="account"/>
@@ -64,7 +64,7 @@
               <v-avatar left>
                 <v-icon >mdi-arrow-up-bold-outline</v-icon>
               </v-avatar>
-              {{asset.stock}} | Valor Individual: R$ {{ asset.currentPrice}} | Quantidade: {{ asset.quantity}}
+              {{asset.stock}} | Valor Individual: R$ {{ Math.round(asset.currentPrice * 100) / 100 }} | Quantidade: {{ asset.quantity}}
             </v-chip>
           </div>
           <v-btn text small class="white--text" @click="$router.push('/ativos')">Ver Mais</v-btn>
