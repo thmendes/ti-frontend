@@ -2,7 +2,6 @@ import Vue from 'vue'
 import { authGuard } from "../auth/authGuard"
 import VueRouter from 'vue-router'
 import Login from "@/views/Login.vue"
-import Panel from '@/views/Panel.vue'
 import Account from '@/views/Account.vue'
 import Assets from '@/views/Assets.vue'
 import Stocks from '@/views/Stocks.vue'
@@ -11,30 +10,28 @@ Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
-    name: 'Painel',
-    component: Panel,
-    beforeEnter: authGuard
-  },
-  {
     path: '/entrar',
     name: 'Login',
-    component: Login
+    component: Login,
+
   },
   {
     path: '/conta',
     name: 'Account',
-    component: Account
+    component: Account,
+    beforeEnter: authGuard
   },
   {
     path: '/ativos',
     name: 'Assets',
-    component: Assets
+    component: Assets,
+    beforeEnter: authGuard
   },
   {
     path: '/acoes',
     name: 'Stocks',
-    component: Stocks
+    component: Stocks,
+    beforeEnter: authGuard
   }
 ]
 

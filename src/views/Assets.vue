@@ -32,11 +32,9 @@
                 </v-chip>
               </v-card-title>
               <v-card-text>
-                Valor de compra: R$ {{asset.purchasePrice}}
+                Valor Individual: R$ {{ asset.currentPrice }}
                 <br>
-                Valor Atual: R$ {{ asset.currentPrice }}
-                <br>
-                Saldo total: R$ {{ getTotal(asset.currentPrice, asset.quantity) }}
+                Saldo Total: R$ {{ getTotal(asset.currentPrice, asset.quantity) }}
               </v-card-text>
               <v-card-actions>
                 <v-btn rounded class="white--text" color="#16796F">Comprar Mais</v-btn>

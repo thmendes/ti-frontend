@@ -36,8 +36,7 @@
         <v-card-text class="white--text" style="font-size:larger">R$ {{ account.balance }}</v-card-text>
         <v-card-text class="white--text">Nome: {{ account.name }}<br>Conta: {{ account.id }}</v-card-text>
         <v-card-actions>
-          <v-btn rounded class="white--text" color="#16796F">Depositar</v-btn>
-          <v-btn rounded class="white--text" color="#16796F">Retirar</v-btn>
+          <deposit :account="account"/>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -63,8 +62,7 @@
               text-color="#9CA89E"
             >
               <v-avatar left>
-                <v-icon v-if="asset.currentPrice > asset.purchasePrice">mdi-arrow-up-bold-outline</v-icon>
-                <v-icon v-else>mdi-arrow-down-bold-outline</v-icon>
+                <v-icon >mdi-arrow-up-bold-outline</v-icon>
               </v-avatar>
               {{asset.stock}} | Valor Individual: R$ {{ asset.currentPrice}} | Quantidade: {{ asset.quantity}}
             </v-chip>
@@ -73,13 +71,31 @@
         </v-card-text>
       </v-card>
     </v-col>
+    <v-col
+      xs="12"
+      sm="12"
+      md="12"
+      lg="12"
+      xl="12"
+      class="float-left"
+    >
+      <history :deposits="account.history"/>
+    </v-col>
   </v-sheet>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import history from '@/components/account/history'
+import deposit from '@/components/account/deposit'
+
 export default {
-  data() {
+  components: {
+    'history': history,
+    'deposit': deposit
+  },
+  data() 
+    {
     return {
       account: {
         cpf: '',
@@ -108,6 +124,7 @@ export default {
     this.getAccount()
     .then((data) => {
       Object.assign(this.account, data.Item)
+      this.account.balance = Math.round(this.account.balance * 100) / 100;
     })
     .catch((error) => {
       console.log(error);
